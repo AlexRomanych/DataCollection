@@ -70,7 +70,7 @@ while True:
                     try:
                         book_availability = int(
                             row.find('td').getText().replace('In stock (', '').replace(' available)', ''))
-                    except Exception:
+                    except Exception as e:
                         book_availability = 0
 
             book_description_p = soap_book.find('p', class_='')
