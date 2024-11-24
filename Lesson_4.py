@@ -34,6 +34,7 @@ def get_tree():
 def get_links():
     """Получаем ссылки из главного блока новостей"""
     tree = get_tree()
+    # Находим все ссылки на новости в главном блоке м атрибутом data-logger='news__MainTopNews'
     news_links = tree.xpath("//div[@data-logger='news__MainTopNews']//a/@href")
     return news_links
 
@@ -65,9 +66,15 @@ def main():
         page_tree = html.fromstring(response.content)
 
         try:
+            # Каждая новость на странице имеет атрибут data-article-index='0'
+            # Получаем название новости
             article_title = page_tree.xpath("//div[@data-article-index='0']//h1/text()")[0].strip().replace('\xa0', ' ')
+
+            # Содержимое новости находится в тегах p
+            # получаем содержимое в виде массива
             article_text_list = page_tree.xpath("//div[@data-article-index='0']//p")
 
+            # Собираем в одну строку
             article_text = ''
             for article_text_item in article_text_list:
                 article_text += article_text_item.text.strip().replace('\xa0', ' ')
@@ -83,7 +90,7 @@ def main():
         except:
             print('Парсинг: или странице не новостная, или другая ошибка')
 
-    save_csv(news)
+    save_csv(news)  # Сохраняем данные в CSV файл
 
 
 if __name__ == "__main__":
