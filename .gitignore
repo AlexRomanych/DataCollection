@@ -2,3 +2,5 @@
 test.py
 data.csv
 news.csv
+*.jpg
+lesson_6/unsplash_parser/images/
